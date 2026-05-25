@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Helix</title>
+
+<style>
+body{
+    margin:0;
+    font-family: Arial;
+    background:#061423;
+    color:#F5F1E8; /* cream */
+}
+
+/* LANDING */
+#landing{
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+
+/* DNA ICON */
+.dna{
+    width:34px;
+    height:34px;
+    margin-bottom:10px;
+    position:relative;
+}
+
+.dna::before,
+.dna::after{
+    content:"";
+    position:absolute;
+    width:2px;
+    height:34px;
+    background:#F5F1E8;
+    left:50%;
+    transform:translateX(-50%) rotate(45deg);
+}
+
+.dna::after{
+    transform:translateX(-50%) rotate(-45deg);
+}
+
+/* TITLE */
+.logo{
+    font-size:54px;
+    font-weight:bold;
+    letter-spacing:2px;
+}
+
+/* TAGLINE */
+.tagline{
+    opacity:0.8;
+    margin-top:6px;
+}
+
+/* BUTTON */
+button{
+    margin-top:25px;
+    padding:12px 18px;
+    border:none;
+    border-radius:10px;
+    font-weight:bold;
+    cursor:pointer;
+    background:#F5F1E8;
+    color:#061423;
+}
+
+/* HOME */
+#home{
+    display:none;
+    padding:20px;
+}
+
+/* GRID */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+    gap:14px;
+    margin-top:20px;
+}
+
+/* CARD */
+.card{
+    background:#0E2A44;
+    padding:18px;
+    border-radius:14px;
+    cursor:pointer;
+    transition:0.2s;
+}
+
+.card:hover{
+    transform:scale(1.04);
+}
+
+/* MODAL */
+#modal{
+    position:fixed;
+    inset:0;
+    background:#000000cc;
+    display:none;
+    justify-content:center;
+    align-items:center;
+}
+
+.modal-box{
+    background:white;
+    color:black;
+    padding:18px;
+    border-radius:12px;
+    width:90%;
+    max-width:420px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- LANDING -->
+<div id="landing">
+
+    <div class="dna"></div>
+
+    <div class="logo">Helix</div>
+
+    <div class="tagline">Research made accessible</div>
+
+    <button onclick="enterSite()">Explore</button>
+
+</div>
+
+<!-- HOME -->
+<div id="home">
+
+    <h2 style="text-align:center;">Opportunities</h2>
+
+    <div class="grid" id="grid"></div>
+
+</div>
+
+<!-- MODAL -->
+<div id="modal" onclick="closeModal()">
+    <div class="modal-box" id="modalBox"></div>
+</div>
+
+<script>
+
+const data = [
+{
+title:"RSI (MIT)",
+type:"Summer Program",
+desc:"Elite high school research program.",
+location:"MIT",
+grade:"High School",
+deadline:"Winter",
+apply:"Essays + recommendations",
+link:"https://example.com"
+},
+{
+title:"NASA Internship",
+type:"Internship",
+desc:"Space and engineering research work.",
+location:"NASA Centers",
+grade:"HS / College",
+deadline:"Varies",
+apply:"Application + resume",
+link:"https://nasa.gov"
+},
+{
+title:"ISEF",
+type:"Competition",
+desc:"Global science fair for students.",
+location:"Worldwide",
+grade:"High School",
+deadline:"Spring",
+apply:"Project qualification",
+link:"https://example.com"
+},
+{
+title:"Polygence",
+type:"Virtual",
+desc:"1-on-1 research mentorship online.",
+location:"Online",
+grade:"High School",
+deadline:"Rolling",
+apply:"Short application",
+link:"https://polygence.org"
+}
+];
+
+function enterSite(){
+    document.getElementById("landing").style.display="none";
+    document.getElementById("home").style.display="block";
+    render();
+}
+
+function render(){
+    const grid=document.getElementById("grid");
+    grid.innerHTML="";
+
+    data.forEach((o,i)=>{
+        grid.innerHTML+=`
+        <div class="card" onclick="openModal(${i})">
+            <b>${o.title}</b><br>
+            <small>${o.type}</small>
+        </div>
+        `;
+    });
+}
+
+function openModal(i){
+    const o=data[i];
+
+    document.getElementById("modalBox").innerHTML=`
+        <h2>${o.title}</h2>
+        <p>${o.desc}</p>
+
+        <p><b>Location:</b> ${o.location}</p>
+        <p><b>Grade:</b> ${o.grade}</p>
+        <p><b>Deadline:</b> ${o.deadline}</p>
+        <p><b>How to apply:</b> ${o.apply}</p>
+
+        <a href="${o.link}" target="_blank">Open Link</a>
+    `;
+
+    document.getElementById("modal").style.display="flex";
+}
+
+function closeModal(){
+    document.getElementById("modal").style.display="none";
+}
+
+</script>
+
+</body>
+</html>
