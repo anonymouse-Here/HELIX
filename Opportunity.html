@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Opportunity</title>
+<link rel="stylesheet" href="styles.css">
+<script defer src="data.js"></script>
+</head>
+
+<body>
+
+<div id="content"></div>
+
+<script>
+const id = new URLSearchParams(window.location.search).get("id");
+const all = Object.values(opportunities).flat();
+const o = all[id];
+
+document.getElementById("content").innerHTML = `
+  <div class="detail">
+    <h1>${o.title}</h1>
+    <p><b>Subject:</b> ${o.subject}</p>
+    <p><b>Grade:</b> ${o.grade}</p>
+    <p><b>Location:</b> ${o.location}</p>
+    <p><b>Deadline:</b> ${o.deadline}</p>
+    <p>${o.description}</p>
+
+    <div class="tip">
+      ⭐ ${o.tip}
+    </div>
+
+    <a href="opportunities.html" class="btn">Back</a>
+  </div>
+`;
+</script>
+
+</body>
+</html>
