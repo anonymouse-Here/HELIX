@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Helix</title>
+
+<style>
+body{
+    margin:0;
+    font-family: Arial;
+    background:#061423;
+    color:#F5F1E8;
+}
+
+/* LANDING */
+#landing{
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+
+.dna{
+    width:34px;
+    height:34px;
+    margin-bottom:10px;
+    position:relative;
+}
+
+.dna::before,
+.dna::after{
+    content:"";
+    position:absolute;
+    width:2px;
+    height:34px;
+    background:#F5F1E8;
+    left:50%;
+    transform:translateX(-50%) rotate(45deg);
+}
+
+.dna::after{
+    transform:translateX(-50%) rotate(-45deg);
+}
+
+.logo{
+    font-size:54px;
+    font-weight:bold;
+}
+
+.tagline{
+    opacity:0.8;
+}
+
+button{
+    margin-top:25px;
+    padding:12px 18px;
+    border:none;
+    border-radius:10px;
+    font-weight:bold;
+    cursor:pointer;
+    background:#F5F1E8;
+    color:#061423;
+}
+
+/* EXPLORE */
+#explore{
+    display:none;
+    padding:20px;
+}
+
+.section-title{
+    text-align:center;
+    margin-top:20px;
+}
+
+/* CATEGORY GRID */
+.cat-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+    gap:10px;
+    margin-top:20px;
+}
+
+.cat{
+    background:#0E2A44;
+    padding:14px;
+    border-radius:12px;
+    text-align:center;
+    cursor:pointer;
+}
+
+/* OPPORTUNITY GRID */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:12px;
+    margin-top:20px;
+}
+
+.card{
+    background:#F5F1E8;
+    color:#061423;
+    padding:14px;
+    border-radius:14px;
+    cursor:pointer;
+}
+
+/* MODAL */
+#modal{
+    position:fixed;
+    inset:0;
+    background:#000000cc;
+    display:none;
+    justify-content:center;
+    align-items:center;
+}
+
+.modal-box{
+    background:white;
+    color:black;
+    padding:18px;
+    border-radius:12px;
+    width:90%;
+    max-width:420px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- LANDING -->
+<div id="landing">
+
+    <div class="dna"></div>
+    <div class="logo">Helix</div>
+    <div class="tagline">Research made accessible</div>
+
+    <button onclick="enter()">Explore</button>
+
+</div>
+
+<!-- EXPLORE -->
+<div id="explore">
+
+    <h2 class="section-title">Explore Categories</h2>
+
+    <div class="cat-grid">
+
+        <div class="cat">Virtual</div>
+        <div class="cat">Competitions</div>
+        <div class="cat">Internships</div>
+        <div class="cat">Research</div>
+        <div class="cat">Summer</div>
+        <div class="cat">STEM Programs</div>
+        <div class="cat">Online Courses</div>
+        <div class="cat">Fellowships</div>
+        <div class="cat">Hackathons</div>
+        <div class="cat">Scholarships</div>
+
+    </div>
+
+    <h2 class="section-title">All Opportunities (100+ later)</h2>
+
+    <div class="grid" id="grid"></div>
+
+</div>
+
+<!-- MODAL -->
+<div id="modal" onclick="closeModal()">
+    <div class="modal-box" id="modalBox"></div>
+</div>
+
+<script>
+
+function enter(){
+    document.getElementById("landing").style.display="none";
+    document.getElementById("explore").style.display="block";
+    render();
+}
+
+const data = [
+{
+title:"RSI (MIT)",
+type:"Research",
+subject:"Biology",
+location:"MIT",
+grade:"High School",
+deadline:"Winter",
+desc:"Elite research program",
+apply:"Essay + recommendations",
+link:"https://example.com"
+},
+{
+title:"NASA Internship",
+type:"Internship",
+subject:"CS / Engineering",
+location:"NASA",
+grade:"HS / College",
+deadline:"Varies",
+desc:"Space research internship",
+apply:"Application + resume",
+link:"https://nasa.gov"
+},
+{
+title:"ISEF",
+type:"Competition",
+subject:"Science",
+location:"Global",
+grade:"High School",
+deadline:"Spring",
+desc:"Global science fair",
+apply:"Project qualification",
+link:"https://example.com"
+}
+];
+
+function render(){
+    const grid=document.getElementById("grid");
+    grid.innerHTML="";
+
+    data.forEach((o,i)=>{
+        grid.innerHTML+=`
+        <div class="card" onclick="openModal(${i})">
+            <b>${o.title}</b><br>
+            <small>${o.location} • ${o.subject}</small>
+        </div>
+        `;
+    });
+}
+
+function openModal(i){
+    const o=data[i];
+
+    document.getElementById("modalBox").innerHTML=`
+        <h2>${o.title}</h2>
+        <p>${o.desc}</p>
+
+        <p><b>Location:</b> ${o.location}</p>
+        <p><b>Grade:</b> ${o.grade}</p>
+        <p><b>Subject:</b> ${o.subject}</p>
+        <p><b>Deadline:</b> ${o.deadline}</p>
+
+        <p><b>Apply:</b> ${o.apply}</p>
+
+        <a href="${o.link}" target="_blank">Open Link</a>
+    `;
+
+    document.getElementById("modal").style.display="flex";
+}
+
+function closeModal(){
+    document.getElementById("modal").style.display="none";
+}
+
+</script>
+
+</body>
+</html>
