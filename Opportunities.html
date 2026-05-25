@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Opportunities</title>
+<link rel="stylesheet" href="styles.css">
+<script defer src="data.js"></script>
+</head>
+
+<body>
+
+<nav class="nav">
+  <div class="logo">Helix</div>
+  <div class="links">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+  </div>
+</nav>
+
+<h2 class="title">Opportunities</h2>
+
+<div id="grid" class="grid"></div>
+
+<script>
+function render() {
+  const grid = document.getElementById("grid");
+  grid.innerHTML = "";
+
+  const all = Object.values(opportunities).flat();
+
+  all.forEach((o, i) => {
+    grid.innerHTML += `
+      <div class="card">
+        <h3>${o.title}</h3>
+        <p>${o.subject}</p>
+        <p>${o.grade} • ${o.location}</p>
+        <p>${o.deadline}</p>
+        <a class="btn-small" href="opportunity.html?id=${i}">View Details</a>
+      </div>
+    `;
+  });
+}
+
+render();
+</script>
+
+</body>
+</html>
